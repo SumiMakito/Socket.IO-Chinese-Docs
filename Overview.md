@@ -112,8 +112,9 @@ io.on('connection', function (socket) {
 
 Socket.IO 允许你发送与接收自定义的事件。在```连接建立```、```信息交换```与```连接断开```时，你都可以推送自定义的事件：
 
-Server
-// note, io(<port>) will create a http server for you
+##### 服务器端
+```javascript
+// 注意，io(<port>)将会创建一个HTTP服务器。
 var io = require('socket.io')(80);
 
 io.on('connection', function (socket) {
@@ -127,12 +128,14 @@ io.on('connection', function (socket) {
     io.emit('user disconnected');
   });
 });
-#Restricting yourself to a namespace
-If you have control over all the messages and events emitted for a particular application, using the default / namespace works. If you want to leverage 3rd-party code, or produce code to share with others, socket.io provides a way of namespacing a socket.
+```
+#### 使用命名空间来管理不同的Socket
 
-This has the benefit of multiplexing a single connection. Instead of socket.io using two WebSocket connections, it’ll use one.
+如果你只需要管理一个程序的所有推送消息与事件，使用默认的```/```就能满足你的需求。如果你想要引入第三方的代码，或是想要写一些可以与别人共享的代码，Socket.IO提供了为Socket连接命名的方法。
+这种做法能使一条连接被更高效的利用。而不是创建两个甚至多个连接。
 
-Server (app.js)
+##### 服务器端 (app.js)
+```javascript
 var io = require('socket.io')(80);
 var chat = io
   .of('/chat')
@@ -152,7 +155,9 @@ var news = io
   .on('connection', function (socket) {
     socket.emit('item', { news: 'item' });
   });
-Client (index.html)
+```
+##### 客户端 (index.html)
+```html
 <script>
   var chat = io.connect('http://localhost/chat')
     , news = io.connect('http://localhost/news');
@@ -165,20 +170,23 @@ Client (index.html)
     news.emit('woot');
   });
 </script>
-#Sending volatile messages
-Sometimes certain messages can be dropped. Let’s say you have an app that shows realtime tweets for the keyword bieber.
+```
 
-If a certain client is not ready to receive messages (because of network slowness or other issues, or because they’re connected through long polling and is in the middle of a request-response cycle), if they doesn’t receive ALL the tweets related to bieber your application won’t suffer.
+#### 发送次要的消息
+有时，因为种种原因，某些消息并不能顺利的推送到所有的客户端。来做个假设，想象一下你的程序在实时的显示关于“GitHub”的推文。
 
-In that case, you might want to send those messages as volatile messages.
+当一个客户端并没有准备好接收消息时(由于网络缓慢或其他问题，或因为他们正处于一个长轮询循环的空闲间隔处)，假如这些客户端不能收到全部有关于“GitHub”的推文，对于这个程序来说并不会有什么影响。
 
-Server
+在这种情况下，你或许会把这种消息当作次要的消息来发送。
+
+##### 服务器端
+```javascript
 var io = require('socket.io')(80);
 
 io.on('connection', function (socket) {
   var tweets = setInterval(function () {
-    getBieberTweet(function (tweet) {
-      socket.volatile.emit('bieber tweet', tweet);
+    getGitHubTweet(function (tweet) {
+      socket.volatile.emit('GitHub tweet', tweet);
     });
   }, 100);
 
@@ -186,12 +194,14 @@ io.on('connection', function (socket) {
     clearInterval(tweets);
   });
 });
-#Sending and getting data (acknowledgements)
-Sometimes, you might want to get a callback when the client confirmed the message reception.
+```
+#### 发送消息与接收反馈
+有时，你或许需要客户端在收到并接受消息后向你反馈结果。
 
-To do this, simply pass a function as the last parameter of .send or .emit. What’s more, when you use .emit, the acknowledgement is done by you, which means you can also pass data along:
+为了实现这个回调，简单地在```.send```或```.emit```的最后一个参数中传递一个回调函数就可以了。此外，当你在```.emit```中使用回调时，确认的工作是由你完成的，这意味着你也可以通过这个回调传回数据。
 
-Server (app.js)
+##### 服务器端 (app.js)
+```javascript
 var io = require('socket.io')(80);
 
 io.on('connection', function (socket) {
@@ -199,7 +209,9 @@ io.on('connection', function (socket) {
     fn('woot');
   });
 });
-Client (index.html)
+```
+##### 客户端 (index.html)
+```html
 <script>
   var socket = io(); // TIP: io() with no args does auto-discovery
   socket.on('connect', function () { // TIP: you can avoid listening on `connect` and listen on events directly too!
@@ -208,6 +220,7 @@ Client (index.html)
     });
   });
 </script>
+```
 #Broadcasting messages
 To broadcast, simply add a broadcast flag to emit and send method calls. Broadcasting means sending a message to everyone else except for the socket that starts it.
 
