@@ -1,12 +1,12 @@
-# 总览
+## 总览
 
-## 如何使用？
-### 安装
+### 如何使用？
+#### 安装
 ```shell
 $ npm install socket.io
 ```
-### 使用Node服务器
-#### 服务器端 (app.js)
+#### 使用Node服务器
+##### 服务器端 (app.js)
 ```javascript
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
@@ -35,7 +35,7 @@ io.on('connection', function (socket) {
 });
 ```
 
-#### 客户端 (index.html)
+##### 客户端 (index.html)
 ```html
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -46,8 +46,8 @@ io.on('connection', function (socket) {
   });
 </script>
 ```
-### 使用Express 3或4
-#### 服务器端 (app.js)
+#### 使用Express 3或4
+##### 服务器端 (app.js)
 
 ```javascript
 var app = require('express')();
@@ -67,7 +67,7 @@ io.on('connection', function (socket) {
   });
 });
 ```
-#### 客户端 (index.html)
+##### 客户端 (index.html)
 ```html
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -78,8 +78,8 @@ io.on('connection', function (socket) {
   });
 </script>
 ```
-### 使用Express框架
-#### 服务器端 (app.js)
+#### 使用Express框架
+##### 服务器端 (app.js)
 ```javascript
 var app = require('express').createServer();
 var io = require('socket.io')(app);
@@ -97,7 +97,7 @@ io.on('connection', function (socket) {
   });
 });
 ```
-#### 客户端 (index.html)
+##### 客户端 (index.html)
 ```html
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -108,7 +108,7 @@ io.on('connection', function (socket) {
   });
 </script>
 ```
-### 发送与接收事件
+#### 发送与接收事件
 
 Socket.IO 允许你发送与接收自定义的事件。在```连接建立```、```信息交换```与```连接断开```时，你都可以推送自定义的事件：
 
