@@ -132,6 +132,7 @@ io.on('connection', function (socket) {
 #### 使用命名空间来管理不同的Socket
 
 如果你只需要管理一个程序的所有推送消息与事件，使用默认的```/```就能满足你的需求。如果你想要引入第三方的代码，或是想要写一些可以与别人共享的代码，Socket.IO提供了为Socket连接命名的方法。
+
 这种做法能使一条连接被更高效的利用。而不是创建两个甚至多个连接。
 
 ##### 服务器端 (app.js)
@@ -221,8 +222,10 @@ io.on('connection', function (socket) {
   });
 </script>
 ```
-#Broadcasting messages
+#### 向客户端广播
 To broadcast, simply add a broadcast flag to emit and send method calls. Broadcasting means sending a message to everyone else except for the socket that starts it.
+
+如果你想要向客户端广播消息的话，只需要简单地在```.send```或```.emit```调用时添加一个标记就可以了。
 
 Server
 var io = require('socket.io')(80);
