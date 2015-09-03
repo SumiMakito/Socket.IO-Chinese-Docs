@@ -1,15 +1,14 @@
 ## 总览
 
-#### [目录](README.md)
-
-##### 1 总览
-##### 2.1 服务器端API
-##### 2.2 客户端API
-##### 3.1 “房间”与命名空间
-##### 3.2 从0.9版本迁移
-##### 3.3 使用多个节点
-##### 3.4 日志输出与调试
-##### 3.5 常见问题
+#### 0 [目录](README.md)
+#### 1 [总览](Overview.md)
+#### 2.1 [服务器端API](ServerAPI.md)
+#### 2.2 [客户端API](ClientAPI.md)
+#### 3.1 [“房间”与命名空间](RoomsAndNamespaces.md)
+#### 3.2 [从0.9版本迁移](MigratingFrom0.9.md)
+#### 3.3 [使用多个节点](UsingMultipleNodes.md)
+#### 3.4 [日志输出与调试](LoggingAndDebugging.md)
+#### 3.5 [常见问题](FAQ.md)
 
 ### 如何使用？
 #### 安装
