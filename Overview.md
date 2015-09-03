@@ -225,25 +225,30 @@ io.on('connection', function (socket) {
 #### 向客户端广播
 To broadcast, simply add a broadcast flag to emit and send method calls. Broadcasting means sending a message to everyone else except for the socket that starts it.
 
-如果你想要向客户端广播消息的话，只需要简单地在```.send```或```.emit```调用时添加一个标记就可以了。
+如果你想要向客户端广播消息的话，只需要简单地在```.send```或```.emit```调用时添加一个标记就可以了。发送广播意味着发送一条消息给除发送者之外的所有人。
 
-Server
+##### 服务器端
+```javascript
 var io = require('socket.io')(80);
 
 io.on('connection', function (socket) {
   socket.broadcast.emit('user connected');
 });
-#Using it just as a cross-browser WebSocket
-If you just want the WebSocket semantics, you can do that too. Simply leverage send and listen on the message event:
+```
+#### 作为跨浏览器的WebSocket使用
 
-Server (app.js)
+如果你想要使用WebSocket的语义，Socket.IO也做得到。简单地修改一下在消息事件到达时的发送和监听就可以了：
+##### 服务器端 (app.js)
+```javascript
 var io = require('socket.io')(80);
 
 io.on('connection', function (socket) {
   socket.on('message', function () { });
   socket.on('disconnect', function () { });
 });
-Client (index.html)
+```
+##### 客户端 (index.html)
+```html
 <script>
   var socket = io('http://localhost/');
   socket.on('connect', function () {
@@ -254,4 +259,6 @@ Client (index.html)
     });
   });
 </script>
-If you don’t care about reconnection logic and such, take a look at Engine.IO, which is the WebSocket semantics transport layer Socket.IO uses.
+```
+
+如果你不在意重连接逻辑和类似的内容，可以参考一下Engine.IO，Socket.IO所使用的WebSocket传输层便是Engine.IO。
